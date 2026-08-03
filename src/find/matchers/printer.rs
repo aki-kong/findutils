@@ -52,7 +52,7 @@ impl Printer {
         )
         .and_then(|()| out.flush());
         if let Err(e) = result {
-            if e.kind() == std::io::ErrorKind::BrokenPipe {
+            if e.kind() == std::io::ErrorKind::BrokenPipe || e.raw_os_error() == Some(29) {
                 std::process::exit(0);
             }
             if print_error_message {
